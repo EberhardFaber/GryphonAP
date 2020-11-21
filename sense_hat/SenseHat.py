@@ -1,17 +1,22 @@
 import random
 import time
 import math
+from sense_hat import SenseHat as sense
 
 
-def sense_hat():
-    t = random.uniform(10, 25)
-    p = random.uniform(1000, 1020)
-    h = random.randint(10, 20)
-    a = random.uniform(-5, 5)
-    time.sleep(random.uniform(0.04, 0.1))
-    return t, p, h, a
+sense.set_imu_config(True, True, True)
 
 
-for x in range(100, -100):
-    s = math.sin(x/100)
-    print(s)
+def sensors():
+    humidity = sense.get_humidity()  # print("Humidity: %s %%rH" % humidity)
+    temp = sense.get_temperature()  # print("Temperature: %s C" % temp)
+    pressure = sense.get_pressure()  # print("Pressure: %s Millibars" % pressure)
+    orientation = sense.get_orientation_degrees()  # print("p: {pitch}, r: {roll}, y: {yaw}".format(**orientation))
+    orientation_rad = sense.get_orientation_radians()  # print("p: {pitch}, r: {roll}, y: {yaw}".format(
+    # **orientation_rad))
+    north = sense.get_compass()  # print("North: %s" % north)
+    gyro_only = sense.get_gyroscope()  # print("p: {pitch}, r: {roll}, y: {yaw}".format(**gyro_only))
+    accel_only = sense.get_accelerometer()  # print("p: {pitch}, r: {roll}, y: {yaw}".format(**accel_only))
+    return humidity, temp, pressure, orientation, north, gyro_only, accel_only
+
+
